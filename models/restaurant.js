@@ -31,7 +31,11 @@ class RestaurantModel{
 
     async find(){
         try {
-            return await Restaurant.findAll();
+            var result =  await Restaurant.findAll();
+            if(result.length === 0){
+                return {status: false}
+            }
+            return {status: true, result: result}
         } catch (error) {
             console.log(error);
             return {status: false}; 

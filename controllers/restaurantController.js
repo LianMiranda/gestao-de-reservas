@@ -20,10 +20,10 @@ class restaurantController {
     }
 
     async find(req, res){
-        var result = await restaurantModel.find();
+        var restaurants = await restaurantModel.find();
 
-        if(result){
-            res.status(200).json({result})
+        if(restaurants.status === true){
+            res.status(200).json({restaurants})
         }else{
             res.status(404).json({message: "Nenhum restaurante encontrado"})
         }
