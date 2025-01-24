@@ -1,7 +1,3 @@
-Aqui está uma versão mais organizada e esteticamente agradável da sua documentação:
-
----
-
 # **API de Gestão de Reservas - DineManager**
 
 O **DineManager** é um sistema para gerenciar reservas em restaurantes, desenvolvido para explorar funcionalidades do Node.js e aprimorar habilidades no desenvolvimento backend. 
