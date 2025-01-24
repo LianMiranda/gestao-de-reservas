@@ -126,7 +126,7 @@ nodemon index.js
 ---
 
 ## **Observações Finais**
-Este projeto é um protótipo para fins de aprendizado e pode ser expandido com mais funcionalidades, como autenticação, notificações e relatórios avançados.
+Este projeto ainda não está pronto e é um protótipo para fins de aprendizado e pode ser expandido com mais funcionalidades, como autenticação, notificações e relatórios avançados.
 
 --- 
 
