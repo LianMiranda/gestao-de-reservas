@@ -1,8 +1,12 @@
 require('dotenv').config()
 const express = require('express');
 const connection = require('./database/connection');
-const Address = require('./database/schemas/address');
 const Restaurant = require('./database/schemas/restaurant');
+const Address = require('./database/schemas/address');
+const Schedule = require('./database/schemas/schedule');
+const Table = require('./database/schemas/table');
+const Reservation = require('./database/schemas/reservation');
+require("./database/associations")
 
 const app = express();
 

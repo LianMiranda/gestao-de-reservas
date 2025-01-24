@@ -3,19 +3,23 @@ require('dotenv').config()
 const connection = require('../connection');
 
 
-const Restaurant = connection.define("restaurant", {
+const Table = connection.define("table", {
     id: {
         type: DataTypes.INTEGER,
         llowNull: false,
         autoIncrement: true,
         primaryKey: true
     },
-    name: {
-        type: DataTypes.STRING,
+    restaurantId: {
+        type: DataTypes.INTEGER,
         llowNull: false,
     },
+    number: {
+        type: DataTypes.INTEGER,
+        llowNull: false,
+    }
 })
 
-Restaurant.sync();
+Table.sync();
 
-module.exports = Restaurant;
+module.exports = Table;

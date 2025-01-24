@@ -2,35 +2,39 @@ const { DataTypes } = require('sequelize');
 const connection = require('../connection');
 require('dotenv').config()
 
-const Address = connection.define("address", {
+const Reservation = connection.define("reservation", {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
     },
-    street: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    neighborhood : {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    number: {
+    tableId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    postalCode: {
+    clientName : {
         type: DataTypes.STRING,
         allowNull: false
     },
-    restaurantId:{
-        type: DataTypes.INTEGER,
+    clientPhone: {
+        type: DataTypes.STRING,
         allowNull: false
+    },
+    reservationDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    reservationTime: {
+        type: DataTypes.TIME,
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.ENUM,
+        values: ["PENDING", "CANCELED", "COMPLETED"]
     }
 });
 
-Address.sync();
+Reservation.sync();
 
-module.exports = Address;
+module.exports = Reservation;
