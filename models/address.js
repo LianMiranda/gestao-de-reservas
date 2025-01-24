@@ -23,7 +23,7 @@ class AddressModel{
             return await Address.update(updateAddress,{where: {id}})
         } catch (error) {
             console.log(error);
-            return {status: false}   
+            return {status: false, error: error}   
         }     
     }
 

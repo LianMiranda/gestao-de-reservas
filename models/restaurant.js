@@ -1,4 +1,5 @@
-const { Restaurant } = require("../database/associations");
+const { Restaurant, Table, Address, Reservation, Schedule } = require("../database/associations");
+const reservation = require("./reservation");
 
 class RestaurantModel{
     async register(name){
@@ -31,11 +32,11 @@ class RestaurantModel{
 
     async find(){
         try {
-            var result =  await Restaurant.findAll();
-            if(result.length === 0){
+            var restaurant =  await Restaurant.findAll();
+            if(restaurant.length === 0){
                 return {status: false}
             }
-            return {status: true, result: result}
+            return {status: true, restaurant: restaurant}
         } catch (error) {
             console.log(error);
             return {status: false}; 
@@ -45,13 +46,35 @@ class RestaurantModel{
 
     async findById(id){
         try {
-            return await Restaurant.findOne({where:{id}});
-        } catch (error) {
+           var restaurant = await Restaurant.findOne({
+                where: {id:id},
+                attributes: ["id", "name"],
+                include: [
+                    { model: Address, 
+                        as: "address",
+                        attributes: ['street', 'neighborhood']
+                     }, // Alias 'address'
+                    { model: Table, 
+                        as: "table", 
+                        attributes: ["id", "restaurantId", "number"],
+                        include: [
+                            { model: Reservation, 
+                                as: "reservation",
+                                attributes: ["id", "tableId", "clientName", "clientPhone", "reservationDate", "reservationTime"]
+                            } // Alias 'reservation'
+                        ]
+                    },
+                    { model: Schedule, as: "schedule" } // Alias 'schedule'
+                ]})
+                
+                return {status: true, restaurant: restaurant}
+            } catch (error) {
             console.log(error);
-            return {status: false}; 
+            return {status: false, error: error}; 
         }
-       
-    }
 }
+    
+}
+
 
 module.exports = new RestaurantModel()

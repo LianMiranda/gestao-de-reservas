@@ -8,7 +8,7 @@ class ReservationModel{
             return {status: true, result: result}
         } catch (error) {
             console.log(error);
-            return {status: false}
+            return {status: false, error: error}
         }
     }
 
@@ -42,7 +42,9 @@ class ReservationModel{
 
     async find(){
         try {
-            return await Reservation.findAll();
+            var result = await Reservation.findAll();
+
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false}; 
