@@ -6,6 +6,7 @@ const Address = require('./database/schemas/address');
 const Schedule = require('./database/schemas/schedule');
 const Table = require('./database/schemas/table');
 const Reservation = require('./database/schemas/reservation');
+const restaurantRoutes = require("./routes/restaurant.routes")
 require("./database/associations")
 
 const app = express();
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 
+app.use("/api/restaurant", restaurantRoutes);
 
 connection.authenticate().then(() => {
     console.log("Conexão com banco de dados feita com sucesso");

@@ -14,16 +14,16 @@ const Schedule = connection.define("schedule", {
         type: DataTypes.INTEGER,
         llowNull: false,
     },
-    date: {
-        type: DataTypes.DATE,
+    day: {
+        type: DataTypes.STRING,
         llowNull: false,
     },
     startHour: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         llowNull: false,
     },
     finishHour: {
-            type: DataTypes.TIME,
+            type: DataTypes.STRING,
             llowNull: false,
         }
     })
