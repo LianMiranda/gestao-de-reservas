@@ -1,21 +1,20 @@
 const { Schedule } = require("../database/associations");
 
 class ScheduleModel{
-    async register(restaurantId, date, startHour, finishHour){
-        try {
-            var result = await Schedule.create({restaurantId, date, startHour, finishHour});
-
+    async register(restaurantId, day, startHour, finishHour){
+   
+     try {
+            var result = await Schedule.create({restaurantId, day, startHour, finishHour});
             return {status: true, result: result}
         } catch (error) {
             console.log(error);
-            return {status: false}
+            return {status: false, error: error}
         }
     }
-
-    async update(id, date, startHour, finishHour){  
+    async update(id, day, startHour, finishHour){  
             const updateSchedule = {}
 
-            if(date) updateSchedule.date = date
+            if(day) updateSchedule.day = day
             if(startHour) updateSchedule.startHour = startHour
             if(finishHour) updateSchedule.finishHour = finishHour
         try {

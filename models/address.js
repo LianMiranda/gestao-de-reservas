@@ -23,7 +23,7 @@ class AddressModel{
             return await Address.update(updateAddress,{where: {id}})
         } catch (error) {
             console.log(error);
-            return {status: false}   
+            return {status: false, error: error}   
         }     
     }
 
@@ -52,9 +52,10 @@ class AddressModel{
         } catch (error) {
             console.log(error);
             return {status: false}; 
-        }
-       
+        }      
     }
+
+    //TODO findByRestaurantId
 }
 
 module.exports = new AddressModel()
