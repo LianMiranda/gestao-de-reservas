@@ -1,5 +1,4 @@
 const { Restaurant, Table, Address, Reservation, Schedule } = require("../database/associations");
-const reservation = require("./reservation");
 
 class RestaurantModel{
     async register(name){
@@ -83,12 +82,6 @@ class RestaurantModel{
             console.log(error);
             return {status: false, error: error}; 
         }
-    }   
-    //TODO  reportGenerate (relatorio)
-    //Gerar relatorios das mesas reservadas nos dias selecionados 
-
-    async generateReport() {
-
     }
 }
 

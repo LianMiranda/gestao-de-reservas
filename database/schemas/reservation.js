@@ -22,7 +22,7 @@ const Reservation = connection.define("reservation", {
         allowNull: false
     },
     reservationDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     reservationTime: {

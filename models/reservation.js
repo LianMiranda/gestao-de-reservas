@@ -72,6 +72,22 @@ class ReservationModel{
     }
 
     //TODO: FINDBYDATE
+    async findReservationByDate(date){
+        try {
+            const result = await Reservation.findAll({
+                where: {reservationDate: date},
+                include: [
+                    { model: Table, 
+                        as: "table", 
+                        attributes: ["id", "restaurantId", "number"]
+                    }]});
+
+            return{status: true, result}
+        } catch (error) {
+            console.log(error);
+            return {status: false}; 
+        }
+    }
 }
 
 module.exports = new ReservationModel()

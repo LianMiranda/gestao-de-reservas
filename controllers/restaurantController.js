@@ -4,6 +4,7 @@ const restaurantModel = require("../models/restaurant");
 const scheduleModel = require("../models/schedule");
 const tableModel = require("../models/table");
 const express = require('express');
+const generateReport = require("../services/reportService");
 
 class restaurantController {
     async create(req, res){
@@ -140,6 +141,17 @@ class restaurantController {
             }else{
                 res.status(400).json({message: "Erro ao encontrar a reserva", error: reservation.error})
             }  
+        } catch (error) {
+            console.log("Erro inesperado: "+error);
+            res.status(500).json({error: "Erro interno no servidor"})
+        }
+        
+    }
+
+    async report(req, res){
+        try {
+            const date = "2025-02-22"
+            await generateReport(res, date)
         } catch (error) {
             console.log("Erro inesperado: "+error);
             res.status(500).json({error: "Erro interno no servidor"})
