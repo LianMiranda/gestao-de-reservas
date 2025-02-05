@@ -52,9 +52,10 @@ class AddressModel{
         } catch (error) {
             console.log(error);
             return {status: false}; 
-        }
-       
+        }      
     }
+
+    //TODO findByRestaurantId
 }
 
 module.exports = new AddressModel()

@@ -1,11 +1,12 @@
-const { Reservation } = require("../database/associations");
+const { Reservation, Table } = require("../database/associations");
 
 class ReservationModel{
     async register(tableId, clientName, clientPhone, reservationDate, reservationTime, status){
+        //TODO não permitir reservas na mesma mesa no mesmo dia
         try {
-            var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "PENDING" : status});
-
+            var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMED" : status});
             return {status: true, result: result}
+            
         } catch (error) {
             console.log(error);
             return {status: false, error: error}
@@ -54,13 +55,23 @@ class ReservationModel{
 
     async findById(id){
         try {
-            return await Reservation.findOne({where:{id}});
+            return await Reservation.findOne({
+                where:{id},
+                include: [{
+                    model: Table, 
+                        as: "table", 
+                        attributes: ["id", "restaurantId", "number"],
+                }],
+                attributes:["id", "clientName", "clientPhone", "reservationDate", "reservationTime", "status"]
+            });
         } catch (error) {
             console.log(error);
             return {status: false}; 
         }
        
     }
+
+    //TODO: FINDBYDATE
 }
 
 module.exports = new ReservationModel()

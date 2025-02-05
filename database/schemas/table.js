@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 require('dotenv').config()
 const connection = require('../connection');
 
-
+//TODO Add capacidade de clientesm em cada mesa, localidade da mesa(dentro ou fora do salão)
 const Table = connection.define("table", {
     id: {
         type: DataTypes.INTEGER,

@@ -33,9 +33,11 @@ class RestaurantModel{
     async find(){
         try {
             var restaurant =  await Restaurant.findAll();
+
             if(restaurant.length === 0){
                 return {status: false}
             }
+            
             return {status: true, restaurant: restaurant}
         } catch (error) {
             console.log(error);
@@ -64,17 +66,34 @@ class RestaurantModel{
                             } // Alias 'reservation'
                         ]
                     },
-                    { model: Schedule, as: "schedule" } // Alias 'schedule'
+                    { model: Schedule, 
+                        as: "schedule",
+                        attributes: ["id", "restaurantId", "day", "startHour", "finishHour"]
+                    
+                    } // Alias 'schedule'
                 ]})
+
+                if(restaurant.lengh === 0){
+                    return{status: false}
+                }
                 
                 return {status: true, restaurant: restaurant}
+
             } catch (error) {
             console.log(error);
             return {status: false, error: error}; 
         }
+    }   
+    //TODO  reportGenerate (relatorio)
+    //Gerar relatorios das mesas reservadas nos dias selecionados 
+
+    async generateReport() {
+
+    }
 }
-    
-}
+
+
+
 
 
 module.exports = new RestaurantModel()
