@@ -22,7 +22,7 @@ const Reservation = connection.define("reservation", {
         allowNull: false
     },
     reservationDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     reservationTime: {
@@ -31,7 +31,7 @@ const Reservation = connection.define("reservation", {
     },
     status: {
         type: DataTypes.ENUM,
-        values: ["PENDING", "CANCELED", "CONFIRMED"]
+        values: ["PENDENTE", "CANCELADO", "CONFIRMADO"]
     }
 });
 

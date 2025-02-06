@@ -1,10 +1,9 @@
 const { Restaurant, Table, Address, Reservation, Schedule } = require("../database/associations");
-const reservation = require("./reservation");
 
 class RestaurantModel{
-    async register(name){
+    async register(name, capacity, cellphoneNumber){
         try {
-            var result = await Restaurant.create({name});
+            var result = await Restaurant.create({name, capacity, cellphoneNumber});
             return {status: true, result: result}
         } catch (error) {
             console.log(error);
@@ -12,9 +11,15 @@ class RestaurantModel{
         }
     }
 
-    async update(id, name){
+    async update(id, name, capacity, cellphoneNumber){
+        const updateRestaurant = {}
+
+        if(name) updateRestaurant.name = name
+        if(capacity) updateRestaurant.capacity = capacity
+        if(cellphoneNumber) updateRestaurant.cellphoneNumber = cellphoneNumber
+
         try {
-            return await Restaurant.update({name},{where: {id}})
+            return await Restaurant.update(updateRestaurant, {where: {id}})
         } catch (error) {
             console.log(error);
             return {status: false}   
@@ -58,7 +63,7 @@ class RestaurantModel{
                      }, // Alias 'address'
                     { model: Table, 
                         as: "table", 
-                        attributes: ["id", "restaurantId", "number"],
+                        attributes: ["id", "restaurantId", "number", "capacity", "location"],
                         include: [
                             { model: Reservation, 
                                 as: "reservation",
@@ -83,12 +88,6 @@ class RestaurantModel{
             console.log(error);
             return {status: false, error: error}; 
         }
-    }   
-    //TODO  reportGenerate (relatorio)
-    //Gerar relatorios das mesas reservadas nos dias selecionados 
-
-    async generateReport() {
-
     }
 }
 
