@@ -2,7 +2,6 @@ var PdfPrinter = require('pdfmake');
 const dayjs = require('dayjs');
 const reservationModel = require('../models/reservation');
 
-
 async function generateReport(res, date) {
     try {
         if(date){
@@ -43,7 +42,7 @@ async function generateReport(res, date) {
             for(let reservation of reservations){
                 const rows = [];
                 rows.push(reservation.id || "N/A") 
-                rows.push(reservation.tableId || "N/A")
+                rows.push(reservation.table.number|| "N/A")
                 rows.push(reservation.clientName || "N/A") 
                 rows.push(reservation.clientPhone || "N/A") 
                 rows.push(formatedDate || "N/A") 
@@ -53,7 +52,18 @@ async function generateReport(res, date) {
                 body.push(rows);
             }
 
-       
+       // Supondo que 'body' já contenha as linhas (primeira linha = cabeçalho)
+        const modifiedBody = body.map((row, rowIndex) => {
+
+            // Não modificar os cabeçalhos (supondo que o cabeçalho já tem estilo)
+            if (rowIndex === 0) return row;
+
+            return row.map(cell => {                        
+                // Se for uma string ou número, converte para objeto com o estilo
+                return { text: cell, style: "tableCell" };
+            });
+        });
+
             const docDefinitions = {
                 content: [
                     {
@@ -62,7 +72,7 @@ async function generateReport(res, date) {
                     {
                         table: {
                             widths: [40, 40, "auto", 90 , 80, 60,80],
-                            body,
+                            body: modifiedBody,
                             alignment: "center"
                         },
                         
@@ -80,6 +90,9 @@ async function generateReport(res, date) {
                         bold: true,
                         margin: 4
                     },
+                    tableCell: {
+                        fontSize: 10,  // Aqui você define o tamanho da fonte desejado
+                    }
                 },
                 defaultStyle: {font: 'Helvetica'}
             }

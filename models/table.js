@@ -16,11 +16,11 @@ class TableModel{
         }
     }
 
-    async register(restaurantId, num){
+    async register(restaurantId, number){
         try {
             await Table.create({
                 restaurantId: restaurantId,
-                number: num,
+                number: number,
             })
         
             return {status: true}

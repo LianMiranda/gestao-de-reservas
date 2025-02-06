@@ -4,7 +4,7 @@ class ReservationModel{
     async register(tableId, clientName, clientPhone, reservationDate, reservationTime, status){
         //TODO não permitir reservas na mesma mesa no mesmo dia
         try {
-            var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMED" : status});
+            var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMADO" : status});
             return {status: true, result: result}
             
         } catch (error) {
@@ -43,7 +43,15 @@ class ReservationModel{
 
     async find(){
         try {
-            var result = await Reservation.findAll();
+            var result = await Reservation.findAll(
+                {
+                    include: [{
+                        model: Table, 
+                            as: "table", 
+                            attributes: ["id", "restaurantId", "number"],
+                    }],
+                }
+            );
 
             return{status: true, result}
         } catch (error) {
@@ -71,7 +79,7 @@ class ReservationModel{
        
     }
 
-    //TODO: FINDBYDATE
+    
     async findReservationByDate(date){
         try {
             const result = await Reservation.findAll({

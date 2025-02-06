@@ -83,7 +83,7 @@ class restaurantController {
             const schedule = await scheduleModel.register(restaurantId, day, startHour, finishHour);
             
             if(schedule.status){
-                res.status(200).json({message: "Hora de funcionamento cadastrada com sucesso"})
+                res.status(200).json({message: "Hora de funcionamento cadastrado com sucesso"})
             }else{
                 res.status(400).json({message: "Erro ao cadastrar hora de funcionamento, verifique se todos os campos foram preenchidos", error: schedule.error})
             }  
@@ -113,17 +113,44 @@ class restaurantController {
         
     }
 
+    async setTable(req, res){
+        try {
+             let {restaurantId, number} = req.body
+
+            const table = await tableModel.register(restaurantId, number);
+
+            if(table.status){
+                res.status(200).json({message: "Mesa cadastrada com sucesso"})
+            }else{
+                res.status(400).json({message: "Erro ao criar a mesa, verifique se todos os campos foram preenchidos", error: reservation.error})
+            }
+        } catch (error) {
+            console.log("Erro inesperado: "+error);
+            res.status(500).json({error: "Erro interno no servidor"})
+        }
+       
+    }
+
     async setReservation(req, res){
         try {
              let {tableId, clientName, clientPhone, reservationDate, reservationTime, status} = req.body
 
-            const reservation = await reservationModel.register(tableId, clientName, clientPhone, reservationDate, reservationTime, status);
+            const checkReservation = await reservationModel.find();
+            
+                for(let reservation of checkReservation.result){
+                    if (reservation.reservationDate == reservationDate && reservation.tableId == tableId) {
+                        return res.status(401).json({ message: `Já existe uma reserva na mesa com id ${tableId} no dia ${reservationDate}` });
+                      }
+                }
 
-            if(reservation.status){
-                res.status(200).json({message: "Reserva cadastrado com sucesso"})
-            }else{
-                res.status(400).json({message: "Erro ao reservar a mesa, verifique se todos os campos foram preenchidos", error: reservation.error})
-            }
+                const reservation = await reservationModel.register(tableId, clientName, clientPhone, reservationDate, reservationTime, status);
+    
+                if(reservation.status){
+                    res.status(200).json({message: "Reserva cadastrada com sucesso"})
+                }else{
+                    res.status(400).json({message: "Erro ao reservar a mesa, verifique se todos os campos foram preenchidos corretamente"})
+                }
+
         } catch (error) {
             console.log("Erro inesperado: "+error);
             res.status(500).json({error: "Erro interno no servidor"})
@@ -150,13 +177,15 @@ class restaurantController {
 
     async report(req, res){
         try {
-            const date = "2025-02-22"
-            await generateReport(res, date)
+            const date = req.params.date
+            const report = await generateReport(res, date)
+
+            return report;
+
         } catch (error) {
             console.log("Erro inesperado: "+error);
             res.status(500).json({error: "Erro interno no servidor"})
-        }
-        
+        }     
     }
 
     

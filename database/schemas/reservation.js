@@ -31,7 +31,7 @@ const Reservation = connection.define("reservation", {
     },
     status: {
         type: DataTypes.ENUM,
-        values: ["PENDING", "CANCELED", "CONFIRMED"]
+        values: ["PENDENTE", "CANCELADO", "CONFIRMADO"]
     }
 });
 

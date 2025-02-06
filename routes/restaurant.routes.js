@@ -11,6 +11,10 @@ router.post("/setSchedule", restaurantController.setOpeningHours);
 router.post("/setAddress", restaurantController.setAddress);
 router.post("/setReservation", restaurantController.setReservation);
 router.get("/getReservation/:id", restaurantController.getReservation);
-router.get("/reservation/report", restaurantController.report)
+router.get("/reservation/report/:date", restaurantController.report);
+
+
+router.post("/setTable", restaurantController.setTable);
+
 
 module.exports = router
