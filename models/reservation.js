@@ -2,7 +2,6 @@ const { Reservation, Table } = require("../database/associations");
 
 class ReservationModel{
     async register(tableId, clientName, clientPhone, reservationDate, reservationTime, status){
-        //TODO não permitir reservas na mesma mesa no mesmo dia
         try {
             var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMADO" : status});
             return {status: true, result: result}

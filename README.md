@@ -55,13 +55,15 @@ nodemon index.js
 
 ### **1. Cadastro de Restaurante**
 - **Método HTTP:** `POST`  
-- **Rota:** `/api/restaurant/create`  
+- **Rota:** `/create`  
 - **Descrição:** Registra um novo restaurante.  
 - **Parâmetros de Requisição:**  
   - **Body:**  
     ```json
     {
-      "name": "Dom Ramon"
+      "name": "Cantina Romana",
+      "capacity": 300,
+      "cellphoneNumber": "(67)99933-9293"
     }
     ```
 
@@ -69,12 +71,14 @@ nodemon index.js
   - **Sucesso:**  
     ```json
     {
-      "message": "Restaurante Dom Ramon criado com sucesso",
+      "message": "Restaurante Cantina Romana criado com sucesso",
       "restaurant": {
-        "id": 1,
-        "name": "Dom Ramon",
-        "createdAt": "2025-01-24T15:57:51.794Z",
-        "updatedAt": "2025-01-24T15:57:51.794Z"
+        "id": 5,
+        "name": "Cantina Romana",
+        "capacity": 300,
+        "cellphoneNumber": "(67)99933-9293",
+        "updatedAt": "2025-02-06T15:18:29.565Z",
+        "createdAt": "2025-02-06T15:18:29.565Z"
       }
     }
     ```
@@ -91,7 +95,7 @@ nodemon index.js
 
 ### **2. Listar Restaurantes**
 - **Método HTTP:** `GET`  
-- **Rota:** `/api/restaurant/find`  
+- **Rota:** `/find`  
 - **Descrição:** Retorna todos os registros de restaurantes.  
 - **Parâmetros de Requisição:** Nenhum.  
 
@@ -101,12 +105,14 @@ nodemon index.js
     {
       "restaurants": {
         "status": true,
-        "result": [
+        "restaurant": [
           {
-            "id": 1,
-            "name": "Dom Ramon",
-            "createdAt": "2025-01-24T16:09:59.000Z",
-            "updatedAt": "2025-01-24T16:09:59.000Z"
+            "id": 2,
+            "name": "Coco Bambu - Afonso Pena",
+            "capacity": 450,
+            "cellphoneNumber": "(67)99567-2342",
+            "createdAt": "2025-02-06T02:35:57.000Z",
+            "updatedAt": "2025-02-06T15:04:10.000Z"
           }
         ]
       }
@@ -124,6 +130,3 @@ nodemon index.js
 ## **Observações Finais**
 Este projeto ainda não está pronto e é um protótipo para fins de aprendizado e pode ser expandido com mais funcionalidades, como autenticação, notificações e relatórios avançados.
 
---- 
-
-Essa versão está mais estruturada e legível, facilitando a compreensão. 🚀

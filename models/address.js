@@ -55,7 +55,14 @@ class AddressModel{
         }      
     }
 
-    //TODO findByRestaurantId
+    async findByRestaurantId(id){
+        try {
+            return await Address.findOne({where:{restaurantId: id}});
+        } catch (error) {
+            console.log(error);
+            return {status: false}; 
+        }      
+    }
 }
 
 module.exports = new AddressModel()

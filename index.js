@@ -14,7 +14,7 @@ const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 
-app.use("/api/restaurant", restaurantRoutes);
+app.use("/", restaurantRoutes);
 
 connection.authenticate().then(() => {
     console.log("Conexão com banco de dados feita com sucesso");

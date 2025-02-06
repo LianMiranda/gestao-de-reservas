@@ -69,7 +69,6 @@ class restaurantController {
         
     }
 
-    //TODO update
     async updateRestaurant(req,res){
         try {
             const id = req.params.id;
@@ -94,7 +93,6 @@ class restaurantController {
         }
     }
 
-    //TODO delete
     async deleteRestaurant(req,res){
         try {
             const id = req.params.id;
