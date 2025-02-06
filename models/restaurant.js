@@ -19,7 +19,8 @@ class RestaurantModel{
         if(cellphoneNumber) updateRestaurant.cellphoneNumber = cellphoneNumber
 
         try {
-            return await Restaurant.update(updateRestaurant, {where: {id}})
+            var result = await Restaurant.update(updateRestaurant, {where: {id}})
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false}   
@@ -28,7 +29,8 @@ class RestaurantModel{
 
     async delete(id){
         try {
-            return await Restaurant.destroy({where:{id}})
+            const result = await Restaurant.destroy({where:{id}});
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false};

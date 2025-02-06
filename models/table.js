@@ -46,7 +46,18 @@ class TableModel{
 
     async delete(id){
         try {
-            return await Table.destroy({where:{id}})
+            const result = await Table.destroy({where:{id}})
+            return {status: true, result }
+        } catch (error) {
+            console.log(error);
+            return {status: false};
+        }
+    }
+
+    async deleteByRestaurant(id){
+        try {
+            const result = await Table.destroy({where:{restaurantId: id}})
+            return {status: true, result }
         } catch (error) {
             console.log(error);
             return {status: false};

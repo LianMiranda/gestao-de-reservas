@@ -56,7 +56,7 @@ class restaurantController {
         
             const restaurant = await restaurantModel.findById(id);
 
-            if(restaurant.status === true){
+            if(restaurant.status){
                 res.status(200).json({restaurant: restaurant.restaurant})
             }else{
                 res.status(404).json({message: restaurant.status, error: "Não foi possivel encontrar um restaurante com o id: "+id})
@@ -70,9 +70,59 @@ class restaurantController {
     }
 
     //TODO update
+    async updateRestaurant(req,res){
+        try {
+            const id = req.params.id;
+            const verify = await restaurantModel.findById(id);
+            const {name, capacity, cellphoneNumber} = req.body
 
+            if(verify.status){
+                const update = await restaurantModel.update(id, name, capacity, cellphoneNumber);
+
+                if(update.status){
+                    res.status(200).json({message: `Restaurante com o id ${id} atualizado com sucesso!`});
+                }else{
+                    res.status(400).json({message: `Erro ao atualizar restaurante com o id ${id}`});
+                }
+            }else{
+                res.status(404).json({message: `Restaurante com o id ${id} não encontrado`});
+            }
+
+        } catch (error) {
+            console.log("Erro inesperado: "+error);
+            res.status(500).json({error: "Erro interno no servidor"})
+        }
+    }
 
     //TODO delete
+    async deleteRestaurant(req,res){
+        try {
+            const id = req.params.id;
+            const verify = await restaurantModel.findById(id);
+            
+            if(verify.status){
+                const del = await restaurantModel.delete(id);
+
+                console.log(del);
+                
+                if(del.status){
+                    const tables = await tableModel.deleteByRestaurant(id)
+
+                    if(tables.status){
+                        res.status(200).json({message: `Restaurante com o id ${id} deletado com sucesso`});
+                    }else{
+                        res.status(400).json({message: `Erro ao deletar as mesas do restaurante com o id ${id}`});
+                    }
+                }else{
+                    res.status(400).json({message: `Erro ao deletar restaurante com o id ${id}`});
+                }
+            }else{
+                res.status(404).json({message: `Restaurante com o id ${id} não encontrado`});
+            }
+        } catch (error) {
+            
+        }
+    }
 
 
     async setOpeningHours(req, res){
@@ -135,7 +185,7 @@ class restaurantController {
         try {
              let {tableId, clientName, clientPhone, reservationDate, reservationTime, status} = req.body
 
-            const checkReservation = await reservationModel.find();
+                const checkReservation = await reservationModel.find();
             
                 for(let reservation of checkReservation.result){
                     if (reservation.reservationDate == reservationDate && reservation.tableId == tableId) {
