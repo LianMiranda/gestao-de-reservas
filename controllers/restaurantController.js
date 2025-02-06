@@ -9,10 +9,10 @@ const generateReport = require("../services/reportService");
 class restaurantController {
     async create(req, res){
         try {
-             let name = req.body.name;
+             let {name, capacity, cellphoneNumber} = req.body;
 
-            if(name){
-                const restaurant = await restaurantModel.register(name);
+            if(name && capacity && cellphoneNumber){
+                const restaurant = await restaurantModel.register(name, capacity, cellphoneNumber);
                 let restaurantId = restaurant.result.id
 
                 if(restaurant.status){
@@ -115,9 +115,9 @@ class restaurantController {
 
     async setTable(req, res){
         try {
-             let {restaurantId, number} = req.body
+             let {restaurantId, number, capacity, location} = req.body
 
-            const table = await tableModel.register(restaurantId, number);
+            const table = await tableModel.register(restaurantId, number, capacity, location);
 
             if(table.status){
                 res.status(200).json({message: "Mesa cadastrada com sucesso"})

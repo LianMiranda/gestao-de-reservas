@@ -48,8 +48,8 @@ class ReservationModel{
                     include: [{
                         model: Table, 
                             as: "table", 
-                            attributes: ["id", "restaurantId", "number"],
-                    }],
+                            attributes: ["id", "restaurantId", "number", "capacity", "location"],
+                        }],
                 }
             );
 
@@ -68,7 +68,7 @@ class ReservationModel{
                 include: [{
                     model: Table, 
                         as: "table", 
-                        attributes: ["id", "restaurantId", "number"],
+                        attributes: ["id", "restaurantId", "number", "capacity", "location"],
                 }],
                 attributes:["id", "clientName", "clientPhone", "reservationDate", "reservationTime", "status"]
             });
@@ -87,7 +87,7 @@ class ReservationModel{
                 include: [
                     { model: Table, 
                         as: "table", 
-                        attributes: ["id", "restaurantId", "number"]
+                        attributes: ["id", "restaurantId", "number", "capacity", "location"],
                     }]});
 
             return{status: true, result}
