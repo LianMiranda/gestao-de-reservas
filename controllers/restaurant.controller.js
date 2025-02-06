@@ -118,29 +118,11 @@ class restaurantController {
                 res.status(404).json({message: `Restaurante com o id ${id} não encontrado`});
             }
         } catch (error) {
-            
-        }
-    }
-
-
-    async setOpeningHours(req, res){
-        try {
-            let {day, startHour, finishHour} = req.body
-            let restaurantId = req.body.restaurantId
-            
-            const schedule = await scheduleModel.register(restaurantId, day, startHour, finishHour);
-            
-            if(schedule.status){
-                res.status(200).json({message: "Hora de funcionamento cadastrado com sucesso"})
-            }else{
-                res.status(400).json({message: "Erro ao cadastrar hora de funcionamento, verifique se todos os campos foram preenchidos", error: schedule.error})
-            }  
-        } catch (error) {
             console.log("Erro inesperado: "+error);
             res.status(500).json({error: "Erro interno no servidor"})
         }
-        
     }
+
 
     async setAddress(req, res){
 

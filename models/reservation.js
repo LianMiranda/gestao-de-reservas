@@ -13,7 +13,6 @@ class ReservationModel{
     }
 
     async update(id, tableId, clientName, clientPhone, reservationDate, reservationTime, status){  
-
             const updateReservation = {}
 
             if(tableId) updateReservation.tableId = tableId

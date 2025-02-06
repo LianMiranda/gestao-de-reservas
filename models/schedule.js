@@ -18,7 +18,8 @@ class ScheduleModel{
             if(startHour) updateSchedule.startHour = startHour
             if(finishHour) updateSchedule.finishHour = finishHour
         try {
-            return await Schedule.update(updateSchedule,{where: {id}}) 
+            const result = await Schedule.update(updateSchedule,{where: {id}});
+            return {status: true, result: result} 
         } catch (error) {
             console.log(error);
             return {status: false}   
@@ -27,7 +28,9 @@ class ScheduleModel{
 
     async delete(id){
         try {
-            return await Schedule.destroy({where:{id}})
+            const result = await Schedule.destroy({where:{id}});
+            return {status: true, result: result}
+
         } catch (error) {
             console.log(error);
             return {status: false};
@@ -36,7 +39,9 @@ class ScheduleModel{
 
     async find(){
         try {
-            return await Schedule.findAll();
+            const result = await Schedule.findAll();
+            return {status: true, result: result}
+
         } catch (error) {
             console.log(error);
             return {status: false}; 
@@ -46,7 +51,32 @@ class ScheduleModel{
 
     async findById(id){
         try {
-            return await Schedule.findOne({where:{id}});
+            const result = await Schedule.findOne({where:{id: id}});
+            
+            if(result === null){
+                return{status: false}
+            }
+
+            return {status: true, result: result}
+
+        } catch (error) {
+            console.log(error);
+            return {status: false}; 
+        }
+       
+    }
+
+    async findByRestaurantId(id){
+        try {
+            const result = await Schedule.findAll({where:{restaurantId: id}});
+
+            if(result.length === 0){
+                return {status: false}; 
+            }else{
+                return {status: true, result: result}
+            }
+            
+
         } catch (error) {
             console.log(error);
             return {status: false}; 

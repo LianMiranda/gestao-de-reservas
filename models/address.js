@@ -20,7 +20,8 @@ class AddressModel{
         if(postalCode) updateAddress.postalCode = postalCode
         
         try {
-            return await Address.update(updateAddress,{where: {id}})
+            const result = await Address.update(updateAddress,{where: {id}});
+            return {status: true, result}  
         } catch (error) {
             console.log(error);
             return {status: false, error: error}   
@@ -29,7 +30,8 @@ class AddressModel{
 
     async delete(id){
         try {
-            return await Address.destroy({where:{id}})
+            var result = await Address.destroy({where:{id}})
+            return {status: true, result: result}
         } catch (error) {
             console.log(error);
             return {status: false};
@@ -38,7 +40,8 @@ class AddressModel{
 
     async find(){
         try {
-            return await Address.findAll();
+            var result = await Address.findAll();
+            return {status: true, result: result}
         } catch (error) {
             console.log(error);
             return {status: false}; 
@@ -48,7 +51,12 @@ class AddressModel{
 
     async findById(id){
         try {
-            return await Address.findOne({where:{id}});
+            var result = await Address.findOne({where:{id}});
+            if(result == null){
+                return {status: false}; 
+            }else{
+                return {status: true, result: result}
+            }
         } catch (error) {
             console.log(error);
             return {status: false}; 
@@ -57,7 +65,12 @@ class AddressModel{
 
     async findByRestaurantId(id){
         try {
-            return await Address.findOne({where:{restaurantId: id}});
+            var result = await Address.findOne({where:{restaurantId: id}});
+            if(result == null){
+                return {status: false}; 
+            }else{
+                return {status: true, result: result}
+            }
         } catch (error) {
             console.log(error);
             return {status: false}; 

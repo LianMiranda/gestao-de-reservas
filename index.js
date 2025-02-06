@@ -7,6 +7,8 @@ const Schedule = require('./database/schemas/schedule');
 const Table = require('./database/schemas/table');
 const Reservation = require('./database/schemas/reservation');
 const restaurantRoutes = require("./routes/restaurant.routes")
+const scheduleRoutes = require("./routes/schedules.routes")
+const addressRoutes = require("./routes/address.routes")
 require("./database/associations")
 
 const app = express();
@@ -14,7 +16,7 @@ const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 
-app.use("/", restaurantRoutes);
+app.use("/", restaurantRoutes, scheduleRoutes, addressRoutes);
 
 connection.authenticate().then(() => {
     console.log("Conexão com banco de dados feita com sucesso");
