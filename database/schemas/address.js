@@ -27,7 +27,8 @@ const Address = connection.define("address", {
     },
     restaurantId:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        onDelete: "CASCADE"
     }
 });
 

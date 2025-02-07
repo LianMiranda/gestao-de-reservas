@@ -13,6 +13,7 @@ const Schedule = connection.define("schedule", {
     restaurantId: {
         type: DataTypes.INTEGER,
         llowNull: false,
+        onDelete: "CASCADE"
     },
     day: {
         type: DataTypes.STRING,

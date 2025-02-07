@@ -12,6 +12,7 @@ const Table = connection.define("table", {
     restaurantId: {
         type: DataTypes.INTEGER,
         llowNull: false,
+        onDelete: "CASCADE"
     },
     number: {
         type: DataTypes.INTEGER,

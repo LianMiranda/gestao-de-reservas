@@ -20,12 +20,11 @@ class TableModel{
 
     async register(restaurantId, number, capacity, location){
         try {
-            await Table.create({restaurantId, number, capacity, location})
-        
-            return {status: true}
+            const result = Table.create({restaurantId, number, capacity, location})
+            return {status: true, result }
         } catch (error) {
             console.log(error);
-            return {status: false}
+            return {status: false, error}
         }
     }
 
@@ -37,49 +36,62 @@ class TableModel{
         if(location) updateTable.location = location
 
         try {
-            return await Table.update(updateTable, {where: {id}})
+            const result = await Table.update(updateTable, {where: {id}});
+            return {status: true, result}
         } catch (error) {
             console.log(error);
-            return {status: false}   
+            return {status: false, error}   
         }     
     }
 
     async delete(id){
         try {
             const result = await Table.destroy({where:{id}})
-            return {status: true, result }
+            return {status: true, result}
         } catch (error) {
             console.log(error);
-            return {status: false};
-        }
-    }
-
-    async deleteByRestaurant(id){
-        try {
-            const result = await Table.destroy({where:{restaurantId: id}})
-            return {status: true, result }
-        } catch (error) {
-            console.log(error);
-            return {status: false};
+            return {status: false, error};
         }
     }
 
     async find(){
         try {
-            return await Table.findAll();
+            const result = await Table.findAll();
+            if(result.length === 0){
+                return {status: false}; 
+            }
+            return {status: true, result}
         } catch (error) {
             console.log(error);
-            return {status: false}; 
+            return {status: false, error}; 
         }
         
     }
 
     async findById(id){
         try {
-            return await Table.findOne({where:{id}});
+            const result = await Table.findOne({where:{id}});
+            if(result.length === 0){
+                return {status: false}; 
+            }
+            return {status: true, result}
         } catch (error) {
             console.log(error);
-            return {status: false}; 
+            return {status: false, error}; 
+        }
+       
+    }
+
+    async findByRestaurantId(id){
+        try {
+            const result = await Table.findAll({where:{restaurantId: id}});
+            if(result.length === 0){
+                return {status: false}; 
+            }
+            return {status: true, result}
+        } catch (error) {
+            console.log(error);
+            return {status: false, error}; 
         }
        
     }

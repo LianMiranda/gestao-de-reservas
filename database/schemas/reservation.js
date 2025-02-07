@@ -11,7 +11,8 @@ const Reservation = connection.define("reservation", {
     },
     tableId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        onDelete: "CASCADE"
     },
     clientName : {
         type: DataTypes.STRING,

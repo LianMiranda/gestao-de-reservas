@@ -1,9 +1,9 @@
-const { Reservation, Table } = require("../database/associations");
+const { Reservation, Table, Restaurant } = require("../database/associations");
 
 class ReservationModel{
     async register(tableId, clientName, clientPhone, reservationDate, reservationTime, status){
         try {
-            var result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMADO" : status});
+            const result = await Reservation.create({tableId, clientName, clientPhone, reservationDate, reservationTime, status: status == undefined ? "CONFIRMADO" : status});
             return {status: true, result: result}
             
         } catch (error) {
@@ -23,7 +23,8 @@ class ReservationModel{
             if(status) updateReservation.status = status
 
         try {
-            return await Reservation.update(updateReservation,{where: {id}}) 
+            const result = await Reservation.update(updateReservation,{where: {id}});
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false}   
@@ -32,7 +33,8 @@ class ReservationModel{
 
     async delete(id){
         try {
-            return await Reservation.destroy({where:{id}})
+            const result =await Reservation.destroy({where:{id}})
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false};
@@ -41,7 +43,7 @@ class ReservationModel{
 
     async find(){
         try {
-            var result = await Reservation.findAll(
+            const result = await Reservation.findAll(
                 {
                     include: [{
                         model: Table, 
@@ -61,15 +63,22 @@ class ReservationModel{
 
     async findById(id){
         try {
-            return await Reservation.findOne({
+            const result = await Reservation.findOne({
                 where:{id},
                 include: [{
                     model: Table, 
                         as: "table", 
                         attributes: ["id", "restaurantId", "number", "capacity", "location"],
+                        include: [
+                            {model: Restaurant,
+                                as: "restaurant",
+                                attributes: ["name"]
+
+                        }]
                 }],
                 attributes:["id", "clientName", "clientPhone", "reservationDate", "reservationTime", "status"]
             });
+            return{status: true, result}
         } catch (error) {
             console.log(error);
             return {status: false}; 
@@ -77,16 +86,16 @@ class ReservationModel{
        
     }
 
-    
     async findReservationByDate(date){
         try {
             const result = await Reservation.findAll({
                 where: {reservationDate: date},
                 include: [
-                    { model: Table, 
+                    { 
+                        model: Table, 
                         as: "table", 
                         attributes: ["id", "restaurantId", "number", "capacity", "location"],
-                    }]});
+                    }]});                    
 
             return{status: true, result}
         } catch (error) {
@@ -94,6 +103,7 @@ class ReservationModel{
             return {status: false}; 
         }
     }
+
 }
 
 module.exports = new ReservationModel()

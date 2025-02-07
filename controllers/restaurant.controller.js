@@ -100,17 +100,9 @@ class restaurantController {
             
             if(verify.status){
                 const del = await restaurantModel.delete(id);
-
-                console.log(del);
                 
                 if(del.status){
-                    const tables = await tableModel.deleteByRestaurant(id)
-
-                    if(tables.status){
-                        res.status(200).json({message: `Restaurante com o id ${id} deletado com sucesso`});
-                    }else{
-                        res.status(400).json({message: `Erro ao deletar as mesas do restaurante com o id ${id}`});
-                    }
+                    res.status(200).json({message: `Restaurante com o id ${id} deletado com sucesso`});
                 }else{
                     res.status(400).json({message: `Erro ao deletar restaurante com o id ${id}`});
                 }
@@ -123,87 +115,6 @@ class restaurantController {
         }
     }
 
-
-    async setAddress(req, res){
-
-        try {
-            let {street, neighborhood, number, postalCode, restaurantId} = req.body
-
-            const address = await addressModel.register(street, neighborhood, number, postalCode, restaurantId);
-
-            if(address.status){
-                res.status(200).json({message: "Endereço cadastrado com sucesso"})
-            }else{
-                res.status(400).json({message: "Erro ao cadastrar endereço, verifique se todos os campos foram preenchidos", error: address.error})
-            }
-        } catch (error) {
-            console.log("Erro inesperado: "+error);
-            res.status(500).json({error: "Erro interno no servidor"})
-        }
-        
-    }
-
-    async setTable(req, res){
-        try {
-             let {restaurantId, number, capacity, location} = req.body
-
-            const table = await tableModel.register(restaurantId, number, capacity, location);
-
-            if(table.status){
-                res.status(200).json({message: "Mesa cadastrada com sucesso"})
-            }else{
-                res.status(400).json({message: "Erro ao criar a mesa, verifique se todos os campos foram preenchidos", error: reservation.error})
-            }
-        } catch (error) {
-            console.log("Erro inesperado: "+error);
-            res.status(500).json({error: "Erro interno no servidor"})
-        }
-       
-    }
-
-    async setReservation(req, res){
-        try {
-             let {tableId, clientName, clientPhone, reservationDate, reservationTime, status} = req.body
-
-                const checkReservation = await reservationModel.find();
-            
-                for(let reservation of checkReservation.result){
-                    if (reservation.reservationDate == reservationDate && reservation.tableId == tableId) {
-                        return res.status(401).json({ message: `Já existe uma reserva na mesa com id ${tableId} no dia ${reservationDate}` });
-                      }
-                }
-
-                const reservation = await reservationModel.register(tableId, clientName, clientPhone, reservationDate, reservationTime, status);
-    
-                if(reservation.status){
-                    res.status(200).json({message: "Reserva cadastrada com sucesso"})
-                }else{
-                    res.status(400).json({message: "Erro ao reservar a mesa, verifique se todos os campos foram preenchidos corretamente"})
-                }
-
-        } catch (error) {
-            console.log("Erro inesperado: "+error);
-            res.status(500).json({error: "Erro interno no servidor"})
-        }
-       
-    }
-
-    async getReservation(req, res){
-        try {
-            const id = req.params.id
-            const reservation = await reservationModel.findById(id)
-
-            if(reservation.status){
-                res.status(200).json({message: reservation})
-            }else{
-                res.status(400).json({message: "Erro ao encontrar a reserva", error: reservation.error})
-            }  
-        } catch (error) {
-            console.log("Erro inesperado: "+error);
-            res.status(500).json({error: "Erro interno no servidor"})
-        }
-        
-    }
 
     async report(req, res){
         try {
