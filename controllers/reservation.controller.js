@@ -1,6 +1,6 @@
 const reservationModel = require("../models/reservation");
 const express = require('express');
-const generateReport = require("../services/reportService")
+const generateReport = require("../services/report.service")
 
 
 class reservationController{

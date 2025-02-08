@@ -1,10 +1,7 @@
-const addressModel = require("../models/address");
-const reservationModel = require("../models/reservation");
 const restaurantModel = require("../models/restaurant");
-const scheduleModel = require("../models/schedule");
 const tableModel = require("../models/table");
 const express = require('express');
-const generateReport = require("../services/reportService");
+const generateReport = require("../services/report.service");
 
 class restaurantController {
     async create(req, res){
@@ -113,23 +110,7 @@ class restaurantController {
             console.log("Erro inesperado: "+error);
             res.status(500).json({error: "Erro interno no servidor"})
         }
-    }
-
-
-    async report(req, res){
-        try {
-            const date = req.params.date
-            const report = await generateReport(res, date)
-
-            return report;
-
-        } catch (error) {
-            console.log("Erro inesperado: "+error);
-            res.status(500).json({error: "Erro interno no servidor"})
-        }     
-    }
-
-    
+    } 
 }
 
 module.exports = new restaurantController ()

@@ -11,6 +11,7 @@ const scheduleRoutes = require("./routes/schedules.routes")
 const addressRoutes = require("./routes/address.routes")
 const tableRoutes = require("./routes/table.routes")
 const reservationRoutes = require("./routes/reservation.routes")
+const userRoutes = require("./routes/user.routes")
 require("./database/associations")
 
 const app = express();
@@ -18,7 +19,7 @@ const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 
-app.use("/", restaurantRoutes, scheduleRoutes, addressRoutes, tableRoutes, reservationRoutes);
+app.use("/", restaurantRoutes, scheduleRoutes, addressRoutes, tableRoutes, reservationRoutes, userRoutes);
 
 connection.authenticate().then(() => {
     console.log("Conexão com banco de dados feita com sucesso");

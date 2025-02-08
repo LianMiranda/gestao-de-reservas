@@ -9,6 +9,15 @@ const Restaurant = connection.define("restaurant", {
         autoIncrement: true,
         primaryKey: true
     },
+    userId:{
+        type: DataTypes.INTEGER,
+        llowNull: false,
+        onDelete: "CASCADE",
+        references: {
+            model: "user", 
+            key: "id",
+        },
+    },
     name: {
         type: DataTypes.STRING,
         llowNull: false,
