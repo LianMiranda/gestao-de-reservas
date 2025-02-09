@@ -64,101 +64,84 @@ class userController{
             } 
         }
 
-            // async find(req, res){
-            //     try {
-            //          const user = await userModel.find();
+             async find(req, res){
+                 try {
+                      const user = await userModel.find();
         
-            //         if(user.status){
-            //             res.status(200).json({users: user.result})
-            //         }else{
-            //             res.status(404).json({message: "Nenhuma Usuário encontrada"})
-            //         }
-            //     } catch (error) {
-            //         console.log("Erro inesperado: "+error);
-            //         res.status(500).json({error: "Erro interno no servidor"})
-            //     }
-               
-            // }
+                     if(user.status){
+                         res.status(200).json({users: user.result})
+                     }else{
+                         res.status(404).json({message: "Nenhum usuário encontrado"});
+                     } 
+                }catch (error) {
+                     console.log("Erro inesperado: "+error);
+                     res.status(500).json({error: "Erro interno no servidor"})
+                 }
+             }
         
-            // async findById(req, res){
-            //     try {
-            //         const id = req.params.id;
+             async findById(req, res){
+                 try {
+                     const id = req.params.id;
                 
-            //         const user = await userModel.findById(id);
+                     const user = await userModel.findById(id);
         
-            //         if(user.status){
-            //             res.status(200).json({user: user.result})
-            //         }else{
-            //             res.status(404).json({message: user.status, error: "Não foi possivel encontrar as Usuários"})
-            //         }
-            //     } catch (error) {
-            //         console.log("Erro inesperado: "+error);
-            //         res.status(500).json({error: "Erro interno no servidor"})
-            //     } 
-            // }
+                     if(user.status){
+                         res.status(200).json({user: user.result})
+                     }else{
+                         res.status(404).json({message: `Não foi possivel encontra usuario com id ${id}`})
+                     }
+                 } catch (error) {
+                     console.log("Erro inesperado: "+error);
+                     res.status(500).json({error: "Erro interno no servidor"})
+                 } 
+             }
 
-            // async findByRestaurantId(req, res){
-            //     try {
-            //         const id = req.params.id;
-                
-            //         const user = await userModel.findByRestaurantId(id);
+        //TODO verificar senha atual para poder alterar para uma nova senha 
+             async update(req,res){
+                 try {
+                     const id = req.params.id;
+                     const verify = await userModel.findById(id);
+                     const {email, password, firstName, lastName, cellphoneNumber, cpf} = req.body
+        
+                     if(verify.status){
+                         const update = await userModel.update(id, email, password, firstName, lastName, cellphoneNumber, cpf);
+        
+                         if(update.status){
+                             res.status(200).json({message: `Usuário com o id ${id} atualizado com sucesso!`});
+                         }else{
+                             res.status(400).json({message: `Erro ao atualizar Usuário com o id ${id}`});
+                         }
+                     }else{
+                         res.status(404).json({message: `Usuário com o id ${id} não encontrado`});
+                     }
+        
+                 } catch (error) {
+                     console.log("Erro inesperado: "+error);
+                     res.status(500).json({error: "Erro interno no servidor"})
+                 }
+             }
+        
+             async delete(req,res){
+                 try {
+                     const id = req.params.id;
+                     const verify = await userModel.findById(id);
                     
-            //         if(user.status){
-            //             res.status(200).json({user: user.result})
-            //         }else{
-            //             res.status(404).json({message: user.status, error: `Restaurante com id ${id} não encontrado`})
-            //         }
-            //     } catch (error) {
-            //         console.log("Erro inesperado: "+error);
-            //         res.status(500).json({error: "Erro interno no servidor"})
-            //     } 
-            // }
-        
-            // async update(req,res){
-            //     try {
-            //         const id = req.params.id;
-            //         const verify = await userModel.findById(id);
-            //         const {email, password, firstName, lastName, cellphoneNumber, cpf} = req.body
-        
-            //         if(verify.status){
-            //             const update = await userModel.update(id, email, password, firstName, lastName, cellphoneNumber, cpf);
-        
-            //             if(update.status){
-            //                 res.status(200).json({message: `Usuário com o id ${id} atualizada com sucesso!`});
-            //             }else{
-            //                 res.status(400).json({message: `Erro ao atualizar Usuário com o id ${id}`});
-            //             }
-            //         }else{
-            //             res.status(404).json({message: `Usuário com o id ${id} não encontrado`});
-            //         }
-        
-            //     } catch (error) {
-            //         console.log("Erro inesperado: "+error);
-            //         res.status(500).json({error: "Erro interno no servidor"})
-            //     }
-            // }
-        
-            // async delete(req,res){
-            //     try {
-            //         const id = req.params.id;
-            //         const verify = await userModel.findById(id);
-                    
-            //         if(verify.status){
-            //             const del = await userModel.delete(id);
+                     if(verify.status){
+                         const del = await userModel.delete(id);
                         
-            //             if(del.status){
-            //                     res.status(200).json({message: `Usuário com o id ${id} deletado com sucesso`});
-            //             }else{
-            //                 res.status(400).json({message: `Erro ao deletar Usuário com o id ${id}`});
-            //             }
-            //         }else{
-            //             res.status(404).json({message: `Usuário com o id ${id} não encontrado`});
-            //         }
-            //     } catch (error) {
-            //         console.log("Erro inesperado: "+error);
-            //         res.status(500).json({error: "Erro interno no servidor"})
-            //     }
-            // }      
+                         if(del.status){
+                                 res.status(200).json({message: `Usuário com o id ${id} deletado com sucesso`});
+                         }else{
+                             res.status(400).json({message: `Erro ao deletar Usuário com o id ${id}`});
+                         }
+                     }else{
+                         res.status(404).json({message: `Usuário com o id ${id} não encontrado`});
+                     }
+                 } catch (error) {
+                     console.log("Erro inesperado: "+error);
+                     res.status(500).json({error: "Erro interno no servidor"})
+                 }
+             }      
 }
 
 module.exports = new userController()

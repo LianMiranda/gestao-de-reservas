@@ -77,8 +77,7 @@ class UserModel{
     async findById(id){
         try {
            var result = await User.findOne({
-                where: {id:id},
-                attributes: ["id", "name"],
+                where: {id},
                 include: [
                     { model: Restaurant, 
                         as: "restaurant",
@@ -97,6 +96,8 @@ class UserModel{
             return {status: false, error: error}; 
         }
     }
+
+    
 }
 
 

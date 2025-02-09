@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 require('dotenv').config()
 const connection = require('../connection');
 
+//TODO adicionar profileId
 const User = connection.define("user", {
     id: {
         type: DataTypes.INTEGER,
