@@ -95,9 +95,6 @@ class addressController{
                     if(verify.status){
                         const update = await addressModel.update(id, street, neighborhood, number, postalCode);
 
-                        console.log("UPDATE!!!!!!!!!!!!: "+update.result);
-                        
-        
                         if(update.status){
                             res.status(200).json({message: `Endereço com o id ${id} atualizado com sucesso!`});
                         }else{

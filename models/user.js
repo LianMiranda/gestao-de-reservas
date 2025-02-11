@@ -15,7 +15,16 @@ class UserModel{
     async update(id, email, password, firstName, lastName, cellphoneNumber, cpf){
         const updateUser = {}
 
-        if(email) updateUser.email = email
+        if(email){ 
+            const emailVerify = this.findByEmail(email);
+
+            if(emailVerify){
+                return{status: false, error: "Email já existe"}
+            }else{
+                updateUser.email = emai
+            }
+        }
+
         if(password) updateUser.password = password
         if(firstName) updateUser.firstName = firstName
         if(lastName) updateUser.lastName = lastName
