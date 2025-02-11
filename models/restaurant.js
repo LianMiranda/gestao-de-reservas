@@ -80,7 +80,7 @@ class RestaurantModel{
                     } // Alias 'schedule'
                 ]})
 
-                if(restaurant.lengh === 0){
+                if(restaurant === null){
                     return{status: false}
                 }
                 

@@ -51,7 +51,7 @@ nodemon index.js
 
 ---
 
-## **Endpoints**
+## **Endpoints RESTAURANTE**
 
 ### **1. Cadastro de Restaurante**
 - **Método HTTP:** `POST`  
@@ -93,7 +93,7 @@ nodemon index.js
 
 ---
 
-### **2. Listar Restaurantes**
+### **2. Listagem de Restaurantes**
 - **Método HTTP:** `GET`  
 - **Rota:** `/find`  
 - **Descrição:** Retorna todos os registros de restaurantes.  
@@ -122,6 +122,160 @@ nodemon index.js
     ```json
     {
       "message": "Nenhum restaurante encontrado"
+    }
+    ```
+
+---
+### **3. Listagem de Restaurantes por ID**
+- **Método HTTP:** `GET`  
+- **Rota:** `/find/:id`  
+- **Descrição:** Retorna as informações do restaurante, incluindo as mesas, endereço, horarios e o usuario responsável.  
+- **Parâmetros de Requisição:** Id.  
+
+- **Respostas:**  
+  - **Sucesso:**  
+    ```json
+        {
+          "restaurant": {
+            "id": 1,
+            "name": "Cantina Romana",
+            "address": null,
+            "table": [
+              {
+                "id": 9,
+                "restaurantId": 1,
+                "number": 9,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 8,
+                "restaurantId": 1,
+                "number": 8,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 7,
+                "restaurantId": 1,
+                "number": 7,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 6,
+                "restaurantId": 1,
+                "number": 6,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 5,
+                "restaurantId": 1,
+                "number": 5,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 4,
+                "restaurantId": 1,
+                "number": 4,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 3,
+                "restaurantId": 1,
+                "number": 3,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 2,
+                "restaurantId": 1,
+                "number": 2,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              },
+              {
+                "id": 1,
+                "restaurantId": 1,
+                "number": 1,
+                "capacity": 5,
+                "location": "Salão interno",
+                "reservation": []
+              }
+            ],
+            "schedule": []
+          }
+  }
+    ```
+  - **Erro:**  
+    ```json
+    {
+      "message": false,
+      "error": "Não foi possivel encontrar um restaurante com o id: 122"
+    }
+    ```
+
+---
+### **4. Update Restaurante**
+- **Método HTTP:** `PUT`  
+- **Rota:** `/update/:id`  
+- **Descrição:** Atualiza os dados do restaurante selecionado.  
+- **Parâmetros de Requisição:**  
+  - **Body:**  
+    ```json
+    {
+      "name": "Coco bambu",
+      "capacity":350 ,
+      "cellphoneNumber": "(67)995585568"
+    }
+    ```
+
+- **Respostas:**  
+  - **Sucesso:**  
+    ```json
+    {
+      "message": "Restaurante com o id 1 atualizado com sucesso!",
+      "restaurant": [
+        1
+      ]
+    }
+    ```
+  - **Erro:**  
+    ```json
+    {
+      "message": "Restaurante com o id 12 não encontrado"
+    }
+    ```
+
+---
+### **5. Delete Restaurante**
+- **Método HTTP:** `DELETE`  
+- **Rota:** `/delete/:id`  
+- **Descrição:** Delete o restaurante selecionado.  
+- **Parâmetros de Requisição:** Id.
+
+- **Respostas:**  
+  - **Sucesso:**  
+    ```json
+    {
+      "message": "Restaurante com o id 1 deletado com sucesso"
+    }
+    ```
+  - **Erro:**  
+    ```json
+    {
+      "message": "Restaurante com o id 1 não encontrado"
     }
     ```
 

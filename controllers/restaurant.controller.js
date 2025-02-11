@@ -14,10 +14,11 @@ class restaurantController {
 
                 if(restaurant.status){
                     const createTables = await tableModel.autoRegister(restaurantId) 
-                    if(createTables.status)
-                    res.status(200).json({message: `Restaurante ${name} criado com sucesso`, restaurant: restaurant.result})
-                    else
-                    res.status(400).json({message: "Erro ao criar as mesas automaticamente"})
+                    if(createTables.status){
+                        res.status(200).json({message: `Restaurante ${name} criado com sucesso`, restaurant: restaurant.result});
+                    }else{
+                        res.status(400).json({message: "Erro ao criar as mesas automaticamente"});
+                    } 
                 }
             }else{
                 res.status(400).json({message: `Erro ao criar restaurante`})
@@ -76,7 +77,7 @@ class restaurantController {
                 const update = await restaurantModel.update(id, name, capacity, cellphoneNumber);
 
                 if(update.status){
-                    res.status(200).json({message: `Restaurante com o id ${id} atualizado com sucesso!`});
+                    res.status(200).json({message: `Restaurante com o id ${id} atualizado com sucesso!`, restaurant: update.result});
                 }else{
                     res.status(400).json({message: `Erro ao atualizar restaurante com o id ${id}`});
                 }
